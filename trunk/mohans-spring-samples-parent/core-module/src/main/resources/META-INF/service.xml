@@ -1,0 +1,6 @@
+<service>
+  <!-- This URL was set by project version ${project.version} -->
+  <url>${jdbc.url}</url>
+  <user>${jdbc.username}</user>
+  <password>${jdbc.password}</password>
+</service>
