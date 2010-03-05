@@ -4,18 +4,19 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
+	<context:annotation-config></context:annotation-config>
+	<context:component-scan base-package="com.test">
+	</context:component-scan>
+
 	<bean id="test" name="test1" class="java.lang.String">
 		<constructor-arg value="asdfasdfasfd"></constructor-arg>
 	</bean>
 
-	<bean id="testBean" class="com.test.spring.beans.TestBean" scope="prototype">
+	<bean id="testBean" class="com.test.core.package1.TestBean" scope="prototype">
 		<property name="id" value="1111"></property>
 		<property name="name" value="mohanaraj"></property>
 		<property name="testAnno" ref="mohanAnno"></property>
 	</bean>
 
-	<context:annotation-config></context:annotation-config>
-	<context:component-scan base-package="com.test">
-	</context:component-scan>
 
 </beans>
