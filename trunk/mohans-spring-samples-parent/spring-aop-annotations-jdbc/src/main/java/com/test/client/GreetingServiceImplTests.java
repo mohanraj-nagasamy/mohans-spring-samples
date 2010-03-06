@@ -1,9 +1,12 @@
-package com.test.aop.blog;
+package com.test.client;
+
 import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit38.AbstractJUnit38SpringContextTests;
+
+import com.test.aop.blog.GreetingService;
 
 @ContextConfiguration(locations = "/blog/applicationContext.xml")
 public class GreetingServiceImplTests extends AbstractJUnit38SpringContextTests {

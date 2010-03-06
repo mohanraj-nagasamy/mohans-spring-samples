@@ -13,7 +13,7 @@ public class ServiceInvocationLogger {
 
 	private int invocationCount;
 
-	@Pointcut("execution(* blog.*Service+.*(..))")
+	@Pointcut("execution(* com.test.aop.blog.*Service+.*(..))")
 	public void serviceInvocation() {
 		System.out.println("ServiceInvocationLogger.serviceInvocation()");
 	}
