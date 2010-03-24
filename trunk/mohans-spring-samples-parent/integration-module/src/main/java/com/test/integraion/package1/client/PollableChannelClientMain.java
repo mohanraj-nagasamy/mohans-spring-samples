@@ -24,9 +24,8 @@ public class PollableChannelClientMain {
 		pollableChannelClientMain.testServiceActivator();
 		pollableChannelClientMain.testGateway();
 
-		/*
-		 MessageChannel inputMessageChannel = (MessageChannel) context.getBean("input");
-		inputMessageChannel.send(new StringMessage("Spring Integration rocks asdf"));
+		/*		MessageChannel inputMessageChannel = (MessageChannel) context.getBean("input");
+				inputMessageChannel.send(new StringMessage("Spring Integration rocks asdf"));
 		*/
 
 		/*		PollableChannel output = (PollableChannel) context.getBean("output");
