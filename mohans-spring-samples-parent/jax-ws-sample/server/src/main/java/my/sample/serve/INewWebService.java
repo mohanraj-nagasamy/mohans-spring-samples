@@ -1,11 +1,12 @@
 package my.sample.serve;
 
-import java.util.Map;
+import java.util.List;
 
+import javax.jws.HandlerChain;
 import javax.jws.WebService;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 @WebService
+@HandlerChain(file="handlers.xml")
 public interface INewWebService {
 	String hello(String string);
 
@@ -15,10 +16,15 @@ public interface INewWebService {
 
 	Test findTestListWithArrays();
 
-	/*	@XmlJavaTypeAdapter(IntegerUserMapAdapter.class)
-		Map<Integer, User> getUsers();
-	*/
-	//@XmlJavaTypeAdapter(value = MyHashMapAdapter.class, type = Map.class)
-	//Map getUsers123();
+	public List<Long> calculateTaxForCustCodeWithLongList(String custCode, float charge, int taxType, int serviceType,
+			String businessUnit, String source, String user);
 
+	public List<String> calculateTaxForCustCodeWithStringList(String custCode, float charge, int taxType,
+			int serviceType, String businessUnit, String source, String user);
+
+	public List<String> calculateTaxForCustCodeWithStringListParam(List<String>  strings);
+
+	public void addValueInSession(Integer integer);
+	
+	public Integer getValueFromSession();
 }

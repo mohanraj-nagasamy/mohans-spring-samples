@@ -10,6 +10,7 @@
 		<module>core-module</module>
 		<module>integration-module</module>
 		<module>spring-aop-annotations-jdbc</module>
+		<module>jax-ws-sample</module>
 	</modules>
 	<name>mohans-spring-samples-parent</name>
 	<url>http://maven.apache.org</url>
