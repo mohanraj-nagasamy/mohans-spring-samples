@@ -33,4 +33,34 @@
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
+
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>Protected Site</web-resource-name>
+			<!-- protects the whole site -->
+			<url-pattern>/*</url-pattern>
+			<!-- list of methods that will be protected -->
+			<http-method>DELETE</http-method>
+			<http-method>POST</http-method>
+			<http-method>PUT</http-method>
+		</web-resource-collection>
+
+		<auth-constraint>
+			<!-- role name with access -->
+			<role-name>CalculatorUser</role-name>
+		</auth-constraint>
+	</security-constraint>
+
+	<!-- BASIC authentication -->
+	<login-config>
+		<auth-method>BASIC</auth-method>
+		<realm-name>Example Basic Authentication</realm-name>
+	</login-config>
+
+	<!-- Define security roles -->
+	<security-role>
+		<description>Test role</description>
+		<role-name>CalculatorUser</role-name>
+	</security-role>
+
 </web-app>
