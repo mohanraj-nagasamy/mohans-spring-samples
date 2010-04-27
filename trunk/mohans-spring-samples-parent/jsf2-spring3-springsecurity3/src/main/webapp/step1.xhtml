@@ -1,0 +1,12 @@
+<app:page xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:app="http://java.sun.com/jsf/composite/app"
+          xmlns:f="http://java.sun.com/jsf/core"
+          pageTitle="#{msg['hi.title.step1']}">
+
+    <h3>#{msg['hi.question']}</h3>
+    <h:form id="helloForm" >
+        <h:inputText id="name" value="#{hi.name}" required="true" requiredMessage="#{msg['field.required']}"/>
+        <h:commandButton id="submit" action="step2" value="#{msg['hi.next']}"/><br/>
+        <h:message for="name" errorClass="error"/>
+    </h:form>
+</app:page>   

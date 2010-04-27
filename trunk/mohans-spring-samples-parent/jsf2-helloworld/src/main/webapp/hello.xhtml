@@ -1,0 +1,19 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                template="./template.xhtml">
+
+    <ui:define name="top">
+        #{hi.greetFrom('initial page')}
+    </ui:define>
+
+    <ui:define name="content">
+        <h2>What's your name?</h2>
+        <h:form id="helloForm" >            
+            <h:inputText id="username" value="#{hi.name}" required="true"/>
+
+            <h:commandButton id="submit" action="response" value="Submit"/><br/>
+            <h:message for="username" styleClass="error"/>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

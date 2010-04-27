@@ -1,0 +1,42 @@
+<app:page xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:app="http://java.sun.com/jsf/composite/app"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:c="http://java.sun.com/jsp/jstl/core"
+          pageTitle="#{msg['person.view.title']}">
+
+    <c:if  test="#{person.isNew}">
+        <c:set var="hideDeleteStyle" value="display:none"/>
+    </c:if>
+
+    <app:crud-head outcomeNew="/secured/person/form" outcomeList="/secured/person/list" />
+    <h:form>
+        <h:panelGrid columns="2">
+            #{msg['person.firstName']}:
+            <h:panelGroup>
+                <h:inputText id="firstName" value="#{person.model.firstName}" title="#{msg['person.firstName']}"
+                             requiredMessage="#{msg['field.required']}"
+                             required="true" />
+                <h:message for="firstName" errorClass="error"/>
+            </h:panelGroup>
+            <h:outputText value="#{msg['person.familyName']}:"/>
+            <h:panelGroup>
+                <h:inputText id="familyName" value="#{person.model.familyName}" title="#{msg['person.familyName']}" />
+                <h:message for="familyName" errorClass="error"/>
+            </h:panelGroup>
+            <h:outputText value="Id:"/>            
+            <h:outputText value="#{person.model.id}" title="Id" />            
+        </h:panelGrid>
+        <h:panelGrid columns="2" styleClass="crud-button-bottom">
+            <h:commandButton action="#{person.save}" value="#{msg['crud.button.save']}" actionListener="#{person.actionListener}"
+                             styleClass="image-save">
+                <f:param name="personId" value="#{person.model.id}"/>
+            </h:commandButton>
+            <h:panelGroup rendered="#{person.isNew}"><input type="button" value="#{msg['crud.button.delete']}" disabled="true" class="image-delete"/></h:panelGroup>
+            <h:commandButton value="#{msg['crud.button.delete']}" action="#{person.delete}" onclick="return confirm('#{msg['crud.message.delete']}')"
+                             styleClass="image-delete"
+                             style="#{hideDeleteStyle}">
+                <f:param name="personId" value="#{person.model.id}"/>
+            </h:commandButton>
+        </h:panelGrid>
+    </h:form>
+</app:page>

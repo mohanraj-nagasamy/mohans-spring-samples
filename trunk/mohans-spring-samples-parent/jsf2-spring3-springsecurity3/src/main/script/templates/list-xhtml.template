@@ -1,0 +1,50 @@
+<app:page xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:app="http://java.sun.com/jsf/composite/app"
+          xmlns:f="http://java.sun.com/jsf/core"
+          pageTitle="#{msg['${tc.beanlike(tc.domain)}.view.list']}" >
+
+    <app:crud-head outcomeNew="/secured/${tc.beanlike(tc.domain)}/form" outcomeList="/secured/${tc.beanlike(tc.domain)}/list" />
+
+    <app:crud-pager pageInfo="#{${tc.beanlike(tc.domain)}.pageInfo}"
+                    pageParamName="page"
+                    outcomeList="/secured/${tc.beanlike(tc.domain)}/list">
+
+        <h:form id="list" >
+            <h:dataTable value="#{${tc.beanlike(tc.domain)}.items}" headerClass="list-header" rowClasses="list-odd-row,list-even-row" var="item" border="0" cellpadding="2" cellspacing="0" styleClass="list-main">
+                <%tc.fields.each{f->%>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{msg['${tc.beanlike(tc.domain)}.${tc.beanlike(f)}']}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.${tc.beanlike(f)}}"/>
+                </h:column>
+                <%}%>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Id"/>
+                    </f:facet>
+                    <h:outputText value="#{item.id}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText escape="false" value=""/>
+                    </f:facet>
+                    <h:link outcome="/secured/${tc.beanlike(tc.domain)}/detail">
+                        <h:graphicImage value="/resources/img/view.png" title="#{msg['crud.button.detail']}" styleClass="list-crud-action"/>
+                        <f:param name="${tc.beanlike(tc.domain)}Id" value="#{item.id}"/>
+                    </h:link>
+                    <h:outputText value=" "/>
+                    <h:link outcome="/secured/${tc.beanlike(tc.domain)}/form">
+                        <h:graphicImage value="/resources/img/edit.png" title="#{msg['crud.button.edit']}" styleClass="list-crud-action"/>
+                        <f:param name="${tc.beanlike(tc.domain)}Id" value="#{item.id}"/>
+                    </h:link>
+                    <h:outputText value=" "/>
+                    <h:commandLink onclick="return confirm('#{msg['crud.message.delete']}')" action="#{${tc.beanlike(tc.domain)}.delete}">
+                        <h:graphicImage value="/resources/img/delete.png" title="#{msg['crud.button.delete']}" styleClass="list-crud-action"/>
+                        <f:param name="${tc.beanlike(tc.domain)}Id" value="#{item.id}" />
+                    </h:commandLink>                                  
+                </h:column>
+            </h:dataTable>
+        </h:form>
+    </app:crud-pager>
+</app:page>

@@ -1,0 +1,48 @@
+package ${tc.packageName}.app.repository;
+
+import ${tc.packageName}.app.domain.${tc.classlike(tc.domain)};
+import java.util.List;
+import javax.annotation.security.RolesAllowed;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+@Repository
+public class ${tc.classlike(tc.domain)}Repository {
+
+    private EntityManager entityManager;
+
+    @PersistenceContext
+    void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
+
+    @RolesAllowed(value = {"ROLE_USER"})
+    @Transactional
+    public void delete(Long id) {
+        final ${tc.classlike(tc.domain)} forDelete = entityManager.getReference(${tc.classlike(tc.domain)}.class, id);
+        entityManager.remove(forDelete);
+    }
+
+    @RolesAllowed(value = {"ROLE_USER"})
+    @Transactional
+    public ${tc.classlike(tc.domain)} save(${tc.classlike(tc.domain)} ${tc.beanlike(tc.domain)}) {
+        return entityManager.merge(${tc.beanlike(tc.domain)});
+    }
+
+    public int countAll() {
+        return ((Integer) entityManager.createQuery("SELECT count(o) from ${tc.classlike(tc.domain)} o").getSingleResult()).intValue();
+    }
+
+    @RolesAllowed(value = {"ROLE_USER"})
+    public List<${tc.classlike(tc.domain)}> findAll(int firstResult, int maxResult) {
+        return entityManager.createNamedQuery("${tc.classlike(tc.domain)}.findAll").setFirstResult(firstResult).setMaxResults(maxResult).getResultList();
+    }
+
+    @RolesAllowed(value = {"ROLE_USER"})
+    public ${tc.classlike(tc.domain)} findById(Long id) {
+        return entityManager.find(${tc.classlike(tc.domain)}.class, id);
+    }
+    
+}

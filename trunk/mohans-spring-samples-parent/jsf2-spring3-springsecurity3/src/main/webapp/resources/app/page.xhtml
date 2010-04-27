@@ -1,0 +1,37 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:composite="http://java.sun.com/jsf/composite">
+    <composite:interface>        
+        <composite:attribute name="pageTitle" type="java.lang.String" required="true"/>        
+    </composite:interface>
+
+    <composite:implementation>
+        <f:view locale="#{preferencesBean.currentLocale}" contentType="text/html; charset=utf-8">            
+            <h:outputStylesheet library="css" name="#{preferencesBean.currentColor}.css"/>
+            <ui:decorate template="/resources/common/layout-two-column.xhtml">
+                <ui:param name="menuPosition" value="#{preferencesBean.menuPosition}"/>
+                <ui:define name="title">#{msg['app.name']}:#{cc.attrs.pageTitle}</ui:define>
+                <ui:define name="preferences">
+                    <ui:include src="preferences.xhtml"/>
+                </ui:define>
+                <ui:define name="top">
+                    <h1>#{msg['app.name']}</h1>
+                </ui:define>
+                <ui:define name="menu">
+                    <ui:include src="menu.xhtml"/>
+                </ui:define>
+                <ui:define name="content">
+                    <h2 id="content-title">#{cc.attrs.pageTitle}</h2>
+                    <composite:insertChildren/>
+                </ui:define>
+                <ui:define name="footer">
+                    <div style="text-align: right">
+                        <h:outputText escape="false" value="#{msg['app.footer']}"/>
+                    </div>
+                </ui:define>
+            </ui:decorate>
+        </f:view>
+    </composite:implementation>
+</ui:composition>
+

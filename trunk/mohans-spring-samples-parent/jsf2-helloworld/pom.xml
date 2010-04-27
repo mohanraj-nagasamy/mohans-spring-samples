@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.googlecode.sandcode</groupId>
+    <artifactId>jsf2-helloworld</artifactId>
+    <packaging>war</packaging>
+    <name>${project.artifactId}</name>
+    <url>http://dmakariev.blogspot.com/2009/12/jsf-20-with-maven-2-plugins-for.html</url>
+    <version>1.0</version>
+    <developers>
+        <developer>
+            <name>Dimitar Makariev</name>
+            <email>dimitar.makariev at gmail.com</email>
+            <url>http://dmakariev.blogspot.com/</url>
+        </developer>
+    </developers>
+
+    <build>
+        <defaultGoal>package</defaultGoal>
+        <sourceDirectory>src/main/java</sourceDirectory>
+        <finalName>${project.artifactId}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.5</source>
+                    <target>1.5</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <repositories>
+        <repository>
+            <id>java.net.m2</id>
+            <url>http://download.java.net/maven/2</url>
+        </repository>
+        <repository>
+            <id>java.net.glassfish.m2</id>
+            <url>http://download.java.net/maven/glassfish</url>
+        </repository>
+    </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>java.net.glassfish.m2</id>
+            <url>http://download.java.net/maven/glassfish</url>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <profiles>
+        <profile>
+            <id>default</id>
+            <!-- Tests are disabled by default.  See the test profile -->
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <defaultGoal>install</defaultGoal>
+                <plugins>
+                    <!-- Embedded Jetty (jetty:run-war) -->
+                    <plugin>
+                        <groupId>org.mortbay.jetty</groupId>
+                        <artifactId>maven-jetty-plugin</artifactId>
+                        <configuration>
+                            <!-- Delete this block to have Jetty run default port (8080) -->
+                            <connectors>
+                                <connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
+                                    <port>8080</port>
+                                </connector>
+                            </connectors>
+                            <!-- force friendly name instead of artifact name + version -->
+                            <contextPath>${project.build.finalName}</contextPath>
+                            <!-- This parameter will auto-deploy modified classes. -->
+                            <!-- You can save changes in a file or class and refresh your browser to view the changes. -->
+                            <scanIntervalSeconds>3</scanIntervalSeconds>
+                        </configuration>
+                    </plugin>
+
+                    <!-- Embedded Tomcat (package tomcat:run) -->
+                    <!-- Standalone Tomcat (package tomcat:deploy) -->
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>tomcat-maven-plugin</artifactId>
+                        <configuration>
+                            <path>/${project.build.finalName}</path>
+                            <!-- Embedded port -->
+                            <port>8080</port>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+            <dependencies>
+                <dependency>
+                    <groupId>com.sun.faces</groupId>
+                    <artifactId>jsf-api</artifactId>
+                    <version>[2.0.1,)</version>
+                </dependency>
+                <dependency>
+                    <groupId>com.sun.faces</groupId>
+                    <artifactId>jsf-impl</artifactId>
+                    <version>[2.0.1,)</version>
+                </dependency>
+                <dependency>
+                    <groupId>javax.el</groupId>
+                    <artifactId>el-api</artifactId>
+                    <version>2.2</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.glassfish.web</groupId>
+                    <artifactId>el-impl</artifactId>
+                    <version>2.2</version>
+                    <scope>runtime</scope>
+                </dependency>
+                <dependency>
+                    <groupId>javax.servlet</groupId>
+                    <artifactId>servlet-api</artifactId>
+                    <version>2.5</version>
+                    <scope>provided</scope>
+                </dependency>
+                <dependency>
+                    <groupId>javax.servlet.jsp</groupId>
+                    <artifactId>jsp-api</artifactId>
+                    <version>2.1</version>
+                    <scope>provided</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+        <!-- embedded Glassfish v3 ( -Pglassfish ) -->
+        <profile>
+            <id>glassfish</id>
+            <build>
+                <defaultGoal>package</defaultGoal>
+                <plugins>
+                    <plugin>
+                        <groupId>org.glassfish</groupId>
+                        <artifactId>maven-embedded-glassfish-plugin</artifactId>
+                        <version>3.0</version>
+                        <configuration>
+                            <app>${project.build.directory}/${build.finalName}.war</app>
+                            <port>8080</port>
+                            <contextRoot>${build.finalName}</contextRoot>
+                            <autoDelete>true</autoDelete>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+            <dependencies>
+                <dependency>
+                    <groupId>javax.faces</groupId>
+                    <artifactId>jsf-api</artifactId>
+                    <version>2.0</version>
+                    <scope>provided</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
+</project>
+
+

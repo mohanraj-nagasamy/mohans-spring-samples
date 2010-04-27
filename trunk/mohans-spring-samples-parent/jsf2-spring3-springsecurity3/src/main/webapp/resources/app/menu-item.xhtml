@@ -1,0 +1,13 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:composite="http://java.sun.com/jsf/composite">
+    <composite:interface>
+        <composite:attribute name="itemOutcome" type="java.lang.String" required="true"/>
+        <composite:attribute name="itemValue" type="java.lang.String" required="true"/>
+    </composite:interface>
+
+    <composite:implementation>
+        <li><h:link outcome="#{cc.attrs.itemOutcome}" value="#{cc.attrs.itemValue}"/></li>
+    </composite:implementation>
+</ui:composition>

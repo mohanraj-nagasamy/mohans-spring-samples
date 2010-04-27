@@ -1,0 +1,16 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">    
+    <h:form>
+        #{msg['app.themecolor']}:        
+        <h:commandLink value="#{msg['app.themecolor.gray']}" style="margin-right: 10px;" action="#{preferencesBean.grayTheme}"/>
+        <h:commandLink value="#{msg['app.themecolor.blue']}" style="margin-right: 10px;" action="#{preferencesBean.blueTheme}"/>
+        #{msg['app.menuposition']}:
+        <h:commandLink value="#{msg['app.menuposition.left']}" style="margin-right: 10px;" action="#{preferencesBean.leftMenu}"/>
+        <h:commandLink value="#{msg['app.menuposition.right']}" style="margin-right: 10px;" action="#{preferencesBean.rightMenu}"/>
+
+        <ui:include src="language.xhtml"/>
+        <h:link value="#{msg['login.title']}" outcome="/login" style="margin-left: 10px;" rendered="#{not preferencesBean.isUserLoggedIn}"/>
+        <h:outputLink  value="/logout" style="margin-left: 10px;" rendered="#{preferencesBean.isUserLoggedIn}">#{msg['logout.title']}</h:outputLink>
+    </h:form>
+</ui:composition>

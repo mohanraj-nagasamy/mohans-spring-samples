@@ -1,0 +1,27 @@
+<app:page xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:app="http://java.sun.com/jsf/composite/app"
+          xmlns:f="http://java.sun.com/jsf/core"
+          pageTitle="#{msg['person.view.detail']}">
+
+    <app:crud-head outcomeNew="/secured/person/form" outcomeList="/secured/person/list" />
+
+    <h:panelGrid columns="2">
+        <h:outputText value="#{msg['person.firstName']}:"/>
+        <h:outputText value="#{person.model.firstName}" title="#{msg['person.firstName']}" />
+        <h:outputText value="#{msg['person.familyName']}:"/>
+        <h:outputText value="#{person.model.familyName}" title="#{msg['person.familyName']}" />
+        <h:outputText value="Id:"/>
+        <h:outputText value="#{person.model.id}" title="Id" />
+    </h:panelGrid>
+    <h:panelGrid columns="2" styleClass="crud-button-bottom">
+        <h:button outcome="/secured/person/form" value="#{msg['crud.button.edit']}" styleClass="image-edit">
+            <f:param name="personId" value="#{person.model.id}"/>
+        </h:button>
+        <h:form>
+            <h:commandButton value="#{msg['crud.button.delete']}" action="#{person.delete}" onclick="return confirm('#{msg['crud.message.delete']}')"
+                             styleClass="image-delete">
+                <f:param name="personId" value="#{person.model.id}"/>
+            </h:commandButton>
+        </h:form>
+    </h:panelGrid>
+</app:page>
