@@ -1,0 +1,54 @@
+<app:page xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:app="http://java.sun.com/jsf/composite/app"
+          xmlns:f="http://java.sun.com/jsf/core"
+          pageTitle="#{msg['person.view.list']}" >
+
+    <app:crud-head outcomeNew="/secured/person/form" outcomeList="/secured/person/list" />
+
+    <app:crud-pager pageInfo="#{person.pageInfo}"
+                    pageParamName="page"
+                    outcomeList="/secured/person/list">
+
+        <h:form id="list" >
+            <h:dataTable value="#{person.items}" headerClass="list-header" rowClasses="list-odd-row,list-even-row" var="item" border="0" cellpadding="2" cellspacing="0" styleClass="list-main">
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{msg['person.firstName']}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.firstName}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{msg['person.familyName']}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.familyName}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Id"/>
+                    </f:facet>
+                    <h:outputText value="#{item.id}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText escape="false" value=""/>
+                    </f:facet>
+                    <h:link outcome="/secured/person/detail">
+                        <h:graphicImage value="/resources/img/view.png" title="#{msg['crud.button.detail']}" styleClass="list-crud-action"/>
+                        <f:param name="personId" value="#{item.id}"/>
+                    </h:link>
+                    <h:outputText value=" "/>
+                    <h:link outcome="/secured/person/form">
+                        <h:graphicImage value="/resources/img/edit.png" title="#{msg['crud.button.edit']}" styleClass="list-crud-action"/>
+                        <f:param name="personId" value="#{item.id}"/>
+                    </h:link>
+                    <h:outputText value=" "/>
+                    <h:commandLink onclick="return confirm('#{msg['crud.message.delete']}')" action="#{person.delete}">
+                        <h:graphicImage value="/resources/img/delete.png" title="#{msg['crud.button.delete']}" styleClass="list-crud-action"/>
+                        <f:param name="personId" value="#{item.id}" />
+                    </h:commandLink>                                  
+                </h:column>
+            </h:dataTable>
+        </h:form>
+    </app:crud-pager>
+</app:page>

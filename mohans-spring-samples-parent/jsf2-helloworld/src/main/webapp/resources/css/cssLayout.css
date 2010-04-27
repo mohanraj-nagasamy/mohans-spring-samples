@@ -1,0 +1,27 @@
+#top {
+    position: relative;
+    background-color: #036fab;
+    color: white;
+    padding: 5px;
+    margin: 0px 0px 10px 0px;
+}
+#top .left{
+    float:left;
+    height: 100px
+}
+#top .right{
+    float:right;
+}
+.error{
+    color:red;
+    font-weight: bold;
+    font-size: 0.9em
+}
+.center_content {
+    position: relative;
+    background-color: #dddddd;
+    padding: 5px;
+}
+
+
+

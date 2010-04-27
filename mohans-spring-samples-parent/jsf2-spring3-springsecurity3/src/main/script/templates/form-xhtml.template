@@ -1,0 +1,39 @@
+<app:page xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:app="http://java.sun.com/jsf/composite/app"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:c="http://java.sun.com/jsp/jstl/core"
+          pageTitle="#{msg['${tc.beanlike(tc.domain)}.view.form']}">
+
+    <c:if  test="#{${tc.beanlike(tc.domain)}.isNew}">
+        <c:set var="hideDeleteStyle" value="display:none"/>
+    </c:if>
+
+    <app:crud-head outcomeNew="/secured/${tc.beanlike(tc.domain)}/form" outcomeList="/secured/${tc.beanlike(tc.domain)}/list" />
+    <h:form>
+        <h:panelGrid columns="2">
+            <%tc.fields.each{f->%>
+            #{msg['${tc.beanlike(tc.domain)}.${tc.beanlike(f)}']}:
+            <h:panelGroup>
+                <h:inputText id="${tc.beanlike(f)}" value="#{${tc.beanlike(tc.domain)}.model.${tc.beanlike(f)}}" title="#{msg['${tc.beanlike(tc.domain)}.${tc.beanlike(f)}']}"
+                             requiredMessage="#{msg['field.required']}"
+                             required="true" />
+                <h:message for="${tc.beanlike(f)}" errorClass="error"/>
+            </h:panelGroup>
+            <%}%>
+            <h:outputText value="Id:"/>            
+            <h:outputText value="#{${tc.beanlike(tc.domain)}.model.id}" title="Id" />            
+        </h:panelGrid>
+        <h:panelGrid columns="2" styleClass="crud-button-bottom">
+            <h:commandButton action="#{${tc.beanlike(tc.domain)}.save}" value="#{msg['crud.button.save']}"
+                             styleClass="image-save">
+                <f:param name="${tc.beanlike(tc.domain)}Id" value="#{${tc.beanlike(tc.domain)}.model.id}"/>
+            </h:commandButton>
+            <h:panelGroup rendered="#{${tc.beanlike(tc.domain)}.isNew}"><input type="button" value="#{msg['crud.button.delete']}" disabled="true" class="image-delete"/></h:panelGroup>
+            <h:commandButton value="#{msg['crud.button.delete']}" action="#{${tc.beanlike(tc.domain)}.delete}" onclick="return confirm('#{msg['crud.message.delete']}')"
+                             styleClass="image-delete"
+                             style="#{hideDeleteStyle}">
+                <f:param name="${tc.beanlike(tc.domain)}Id" value="#{${tc.beanlike(tc.domain)}.model.id}"/>
+            </h:commandButton>
+        </h:panelGrid>
+    </h:form>
+</app:page>

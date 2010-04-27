@@ -1,0 +1,51 @@
+package ${tc.packageName}.app.domain;
+
+import java.io.Serializable;
+import javax.persistence.Basic;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+
+@Entity
+@NamedQueries({    
+    @NamedQuery(name = "${tc.classlike(tc.domain)}.findAll", query = "SELECT o FROM ${tc.classlike(tc.domain)} o")
+})
+public class ${tc.classlike(tc.domain)} implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) 
+    private Long id;
+    
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getName() + "[id=" + this.getId() + "]";
+    }
+   
+    <%tc.fields.each{f->%>
+    @Basic
+    private String <%=tc.beanlike(f)%>;
+    <%}%>
+    
+    <%tc.fields.each{f->%>
+    public String get<%=tc.classlike(f)%>() {
+        return <%=tc.beanlike(f)%>;
+    }
+
+    public void set<%=tc.classlike(f)%>(String <%=tc.beanlike(f)%>) {
+        this.<%=tc.beanlike(f)%> = <%=tc.beanlike(f)%>;
+    }
+    <%}%>
+
+}

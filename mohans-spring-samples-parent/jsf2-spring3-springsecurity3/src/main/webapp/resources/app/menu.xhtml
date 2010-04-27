@@ -1,0 +1,16 @@
+<app:menu-form xmlns:h="http://java.sun.com/jsf/html"
+               xmlns:app="http://java.sun.com/jsf/composite/app"
+               id="menu">
+    <app:menu-group groupName="#{msg['app.menu.public']}">
+        <app:menu-item itemOutcome="/welcome" itemValue="#{msg['welcome.title']}"/>
+        <app:menu-item itemOutcome="/step1" itemValue="#{msg['hi.title']}"/>
+    </app:menu-group>
+    <app:menu-group groupName="#{msg['app.menu.adminonly']}">
+        <li><h:commandLink action="#{person.create12Recrods}" value="#{msg['person.title.create12']}"/></li>
+        <li><h:commandLink action="#{person.deleteAll}" value="#{msg['person.title.deleteAll']}"/></li>
+    </app:menu-group>
+    <app:menu-group groupName="#{msg['app.menu.secured']}">
+        <li><h:commandLink action="/secured/person/list" value="#{msg['person.title.all']} ('POST')" /></li>
+        <app:menu-item itemOutcome="/secured/person/list" itemValue="#{msg['person.title.all']} ('GET')"/>
+    </app:menu-group>
+</app:menu-form>

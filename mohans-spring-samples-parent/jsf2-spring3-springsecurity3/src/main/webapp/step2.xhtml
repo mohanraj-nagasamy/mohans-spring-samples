@@ -1,0 +1,14 @@
+<app:page xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:app="http://java.sun.com/jsf/composite/app"
+          xmlns:f="http://java.sun.com/jsf/core"
+          pageTitle="#{msg['hi.title.step2']}">
+
+    <h:form id="responseform">
+        <h3>
+            <h:outputFormat value="#{msg['hi.greet']}">
+                <f:param value="#{hi.name}"/>
+            </h:outputFormat>
+        </h3>
+        <h:commandButton id="back" value="#{msg['hi.back']}" action="step1" />
+    </h:form>
+</app:page>

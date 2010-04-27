@@ -1,0 +1,98 @@
+package ${tc.packageName}.app.web;
+
+import java.io.Serializable;
+import java.util.List;
+import javax.annotation.ManagedBean;
+import javax.inject.Inject;
+import org.springframework.context.annotation.Scope;
+import ${tc.packageName}.app.domain.${tc.classlike(tc.domain)};
+import ${tc.packageName}.app.repository.${tc.classlike(tc.domain)}Repository;
+import ${tc.packageName}.common.web.LongParameterResolver;
+import ${tc.packageName}.common.web.Messenger;
+import ${tc.packageName}.common.web.PageInfo;
+
+@ManagedBean("${tc.beanlike(tc.domain)}")
+@Scope("request")
+public class ${tc.classlike(tc.domain)}Controller implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    @Inject
+    public ${tc.classlike(tc.domain)}Controller(${tc.classlike(tc.domain)}Repository ${tc.beanlike(tc.domain)}Repository,  LongParameterResolver parameterResolver, Messenger facesMessenger) {
+        this.modelRepository = ${tc.beanlike(tc.domain)}Repository;
+        this.parameterResolver = parameterResolver;
+        this.facesMessenger=facesMessenger;
+        this.maxItemsOnPage = 5;
+        this.pageIndex = new Long(1);
+    }
+
+    private final ${tc.classlike(tc.domain)}Repository modelRepository;
+    private final LongParameterResolver parameterResolver;
+    private final Messenger facesMessenger;
+
+    private final static String MODEL_ID_PARAMETER="${tc.beanlike(tc.domain)}Id";
+    
+    private Long pageIndex;
+    private int maxItemsOnPage;
+    private ${tc.classlike(tc.domain)} model;
+    private List<${tc.classlike(tc.domain)}> items;
+    private PageInfo pageInfo;
+
+    public String delete() {
+        final Long modelId = parameterResolver.resolve(MODEL_ID_PARAMETER);
+        modelRepository.delete(modelId);
+        return "/secured/${tc.beanlike(tc.domain)}/list?faces-redirect=true";
+    }
+
+    public String save() {
+        this.model = modelRepository.save(getModel());
+        return "/secured/${tc.beanlike(tc.domain)}/detail?faces-redirect=true&"+MODEL_ID_PARAMETER+"=" + getModel().getId();
+    }
+
+    public List<${tc.classlike(tc.domain)}> getItems() {
+        if (false == getPageInfo().getHasItems()) {
+            return null;
+        }
+        if (null == items) {
+            items = modelRepository.findAll(getPageInfo().getFirstItemIndex(), getPageInfo().getMaxItemsOnPage());
+        }
+        return items;
+    }
+
+    public PageInfo getPageInfo() {
+        if (null == pageInfo) {
+            final int itemCount = modelRepository.countAll();
+            final long currentPage = this.getPageIndex().longValue();
+            pageInfo = new PageInfo(maxItemsOnPage, itemCount, currentPage);
+        }
+        return pageInfo;
+    }
+
+    public ${tc.classlike(tc.domain)} getModel() {
+        if (null != model) {
+            return model;
+        }
+
+        final Long modelId = parameterResolver.resolve(MODEL_ID_PARAMETER);
+        if (null != modelId) {
+            model = modelRepository.findById(modelId);
+        }
+        
+        if (null == model) {
+            model = new ${tc.classlike(tc.domain)}();
+        }
+        return model;
+    }
+
+    private Long getPageIndex() {
+        final Long resolvedPage = parameterResolver.resolve("page");        
+        if (null != resolvedPage) {
+            pageIndex = resolvedPage;
+        }       
+        return pageIndex;
+    }
+
+    public boolean getIsNew() {
+        return null == getModel().getId();
+    }
+}

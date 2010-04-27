@@ -1,0 +1,17 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:composite="http://java.sun.com/jsf/composite">
+    <composite:interface>
+        <composite:attribute name="id" type="java.lang.String" required="true"/>
+    </composite:interface>
+
+    <composite:implementation>
+        <h:form id="#{cc.attrs.id}">
+            <ul>
+                <composite:insertChildren/>
+            </ul>
+        </h:form>
+    </composite:implementation>
+
+</ui:composition>

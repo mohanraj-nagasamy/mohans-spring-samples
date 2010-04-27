@@ -1,0 +1,20 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:app="http://java.sun.com/jsf/composite/app"
+                xmlns:composite="http://java.sun.com/jsf/composite">
+    <composite:interface>        
+        <composite:attribute name="outcomeNew" type="java.lang.String"/>
+        <composite:attribute name="outcomeList" type="java.lang.String"/>
+    </composite:interface>
+
+    <composite:implementation>        
+        <h:panelGrid columns="2" styleClass="crud-head">
+            <h:button outcome="#{cc.attrs.outcomeNew}" value="#{msg['crud.button.new']}" styleClass="crud-new"/>
+            <h:button outcome="#{cc.attrs.outcomeList}" value="#{msg['crud.button.list']}" styleClass="crud-list"/>
+        </h:panelGrid>
+        <h:panelGroup id="messagePanel" layout="block">
+            <h:messages globalOnly="true"  errorClass="error" infoClass="info" layout="table"/>
+        </h:panelGroup>
+    </composite:implementation>
+</ui:composition>

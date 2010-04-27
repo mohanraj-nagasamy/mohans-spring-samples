@@ -1,0 +1,11 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+    #{msg['app.language']}:
+    <ui:repeat value="#{preferencesBean.supportedLocales}" var="locale">
+        <h:commandLink immediate="true">
+            <h:graphicImage value="/resources/img/flag/#{locale.language}.png" alt="#{locale.language}" style="border: 0px;margin-left:3px;margin-right:3px;"/>
+            <f:setPropertyActionListener target="#{preferencesBean.currentLocaleLanguage}" value="#{locale.language}"/>
+        </h:commandLink>
+    </ui:repeat>
+</ui:composition>

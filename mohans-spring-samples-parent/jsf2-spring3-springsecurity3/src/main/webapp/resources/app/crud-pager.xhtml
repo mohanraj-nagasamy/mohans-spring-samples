@@ -1,0 +1,36 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:app="http://java.sun.com/jsf/composite/app"
+                xmlns:composite="http://java.sun.com/jsf/composite">
+    <composite:interface>
+        <composite:attribute name="outcomeList" type="java.lang.String"/>
+        <composite:attribute name="pageInfo" type="com.jsf2.test.common.web.PageInfo"/>
+        <composite:attribute name="pageParamName" type="java.lang.String"/>        
+    </composite:interface>
+
+    <composite:implementation>
+        <h:outputText value="#{msg['crud.norecords']}" rendered="#{not cc.attrs.pageInfo.hasItems}" />
+        <h:panelGroup rendered="#{cc.attrs.pageInfo.hasItems}">
+            <h:outputFormat styleClass="crud-list-pageof" value="#{msg['crud.list.pageOf']}">
+                <f:param value="#{cc.attrs.pageInfo.currentPage}"/>
+                <f:param value="#{cc.attrs.pageInfo.numberOfPages}"/>
+            </h:outputFormat>            
+            <h:panelGroup
+                rendered="#{! cc.attrs.pageInfo.hasPrevious}"
+                ><input type="button" value="#{msg['crud.page.previous']}" class="image-previous" disabled="true"/></h:panelGroup>
+            <h:button outcome="#{cc.attrs.outcomeList}" styleClass="image-previous" value="#{msg['crud.page.previous']}" rendered="#{cc.attrs.pageInfo.hasPrevious}">
+                <f:param name="#{cc.attrs.pageParamName}" value="#{cc.attrs.pageInfo.previousPage}"/>
+            </h:button>
+            <h:panelGroup
+                rendered="#{! cc.attrs.pageInfo.hasNext}"
+                ><input type="button" value="#{msg['crud.page.next']}" class="image-next" disabled="true"/></h:panelGroup>
+            <h:button outcome="#{cc.attrs.outcomeList}" value="#{msg['crud.page.next']}" rendered="#{cc.attrs.pageInfo.hasNext}"  styleClass="image-next">
+                <f:param name="page" value="#{cc.attrs.pageInfo.nextPage}"/>
+            </h:button>
+            <div id="crud-list-children">
+                <composite:insertChildren/>
+            </div>
+        </h:panelGroup>
+    </composite:implementation>
+</ui:composition>
