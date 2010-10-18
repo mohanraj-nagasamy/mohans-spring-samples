@@ -8,3 +8,5 @@ Running different servers
 # * mvn package jetty:run-war  
 # * mvn package -Pglassfish
 # * mvn -Pglassfish embedded-glassfish:run
+
+mvn clean compile war:inplace tomcat:run -> this is runing in exploded mode.
