@@ -1,14 +1,13 @@
 package com.googlecode.sandcode.helloworld;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 
 /**
  *
  * @author dmakariev
  */
 @ManagedBean(name = "hi")
-@RequestScoped
+@javax.faces.bean.SessionScoped
 public class HelloWorld {
 
     private String name;
